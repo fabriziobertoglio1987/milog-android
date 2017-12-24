@@ -8,12 +8,12 @@
             android:title="Profiles" />
 
         <item
-            android:id="@+id/nav_userspace"
-            android:title="UserSpace"
+            android:id="@+id/nav_room"
+            android:title="Your Room"
             />
         <item
-            android:id="@+id/nav_blog"
-            android:title="Block"
+            android:id="@+id/nav_chatroom"
+            android:title="Your Chatroom"
             />
         <item
             android:id="@+id/nav_drafts"

@@ -103,6 +103,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         WebSettings webSettings = TurbolinksSession.getDefault(this).getWebView().getSettings();
         webSettings.setUserAgentString("turbolinks-app, sprachspiel, official, android");
 
+        // I add the Javascript interface from WebService.java showToast()
+        // https://github.com/tamcgoey/dasher-app-android/blob/master/src/main/java/com/usedashnow/dasher/ActiveDashActivity.java and to set the message read https://speakerdeck.com/tamcgoey/building-hybrid-apps-with-rails-a-case-study
+        TurbolinksSession.getDefault(this).addJavascriptInterface(new WebService(this), "Android");
+
         location = HOST_URL + "/";
 
         TurbolinksSession.getDefault(this)
@@ -174,22 +178,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         try {
             switch (item.getItemId()) {
                 case R.id.nav_sign_up:
-                    visitProposedToLocationWithAction(HOST_URL + "/signup", ACT_ADVANCE);
+                    visitProposedToLocationWithAction(HOST_URL + "/users/sign_up", ACT_ADVANCE);
                     break;
                 case R.id.nav_sign_in:
-                    visitProposedToLocationWithAction(HOST_URL + "/signin", ACT_ADVANCE);
+                    visitProposedToLocationWithAction(HOST_URL + "/users/sign_in", ACT_ADVANCE);
                     break;
                 case R.id.nav_sign_out:
                     signOut();
                     break;
                 case R.id.nav_profiles:
-                    visitProposedToLocationWithAction(HOST_URL + "/account/edit", ACT_ADVANCE);
+                    visitProposedToLocationWithAction(HOST_URL + "/users/edit", ACT_ADVANCE);
                     break;
-                case R.id.nav_userspace:
-                    visitProposedToLocationWithAction(HOST_URL + "/" + mCurrentUserMeta.get("username"), ACT_ADVANCE);
+                case R.id.nav_room:
+                    visitProposedToLocationWithAction(HOST_URL + "/rooms/" + mCurrentUserMeta.get("roomId"), ACT_ADVANCE);
                     break;
-                case R.id.nav_blog:
-                    visitProposedToLocationWithAction(HOST_URL + "/" + mCurrentUserMeta.get("username") + "/blog", ACT_ADVANCE);
+                case R.id.nav_chatroom:
+                    visitProposedToLocationWithAction(HOST_URL + "/rooms/" + mCurrentUserMeta.get("roomId") + "/chatrooms/" + mCurrentUserMeta.get("chatroomId"), ACT_ADVANCE);
                     break;
                 case R.id.nav_drafts:
                     visitProposedToLocationWithAction(HOST_URL + "/" + mCurrentUserMeta.get("username") + "/drafts", ACT_ADVANCE);
@@ -278,9 +282,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             naviMenu.setGroupVisible(R.id.group_guest, false);
 
             try {
-                mUserNameTextView.setText(mCurrentUserMeta.getString("username"));
-                mUserEmailTextView.setText(mCurrentUserMeta.getString("email"));
-                mUserAvatarDraweeView.setImageURI(mCurrentUserMeta.getString("avatarUrl"));
+                mUserNameTextView.setText(mCurrentUserMeta.getString("Id"));
+                //mUserEmailTextView.setText(mCurrentUserMeta.getString("email"));
+                //mUserAvatarDraweeView.setImageURI(mCurrentUserMeta.getString("avatarUrl"));
 
                 updateNotificationText(mCurrentUserMeta.getInt("notifyCount"));
             } catch (JSONException e) {
@@ -291,7 +295,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             naviMenu.setGroupVisible(R.id.group_guest, true);
 
             mUserNameTextView.setText("Guest");
-            mUserEmailTextView.setText("guest@hijinhu.me");
+            mUserEmailTextView.setText("guest@sprachspiel.xyz");
             mUserAvatarDraweeView.setImageResource(R.drawable.ic_account_circle_white_48dp);
         }
     }
@@ -354,7 +358,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void searchCLose() {
-        location = HOST_URL + "/community";
+        location = HOST_URL + "/";
         TurbolinksSession.getDefault(this).visit(location);
         mSearched = false;
     }
