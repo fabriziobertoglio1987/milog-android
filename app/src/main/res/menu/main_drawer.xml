@@ -5,32 +5,32 @@
         android:visible="false">
         <item
             android:id="@+id/nav_profiles"
-            android:title="个人资料" />
+            android:title="Profiles" />
 
         <item
             android:id="@+id/nav_userspace"
-            android:title="我的动态"
+            android:title="UserSpace"
             />
         <item
             android:id="@+id/nav_blog"
-            android:title="我的博客"
+            android:title="Block"
             />
         <item
             android:id="@+id/nav_drafts"
-            android:title="草稿箱"
+            android:title="Drafts"
             />
 
         <item
             android:id="@+id/nav_sign_out"
-            android:title="退出" />
+            android:title="Sign Out" />
     </group>
     <group
         android:id="@+id/group_guest">
         <item
             android:id="@+id/nav_sign_up"
-            android:title="注册" />
+            android:title="Sign Up" />
         <item
             android:id="@+id/nav_sign_in"
-            android:title="登录" />
+            android:title="Sign In" />
     </group>
 </menu>

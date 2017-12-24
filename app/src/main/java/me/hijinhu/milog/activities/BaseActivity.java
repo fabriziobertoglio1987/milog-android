@@ -24,7 +24,6 @@ import me.hijinhu.milog.Constants;
 public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter {
     protected static final boolean DEBUG = Constants.DEBUG;
     protected static String TAG = BaseActivity.class.getSimpleName();
-
     protected static final String HOST_URL = Constants.HOST_URL;
     protected static final String INTENT_URL = "intentUrl";
 

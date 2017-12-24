@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Milog</string>
-    <string name="navigation_drawer_open">打开导航菜单</string>
-    <string name="navigation_drawer_close">关闭导航菜单</string>
-
+    <string name="app_name">SprachSpiel</string>
+    <string name="navigation_drawer_open">First Link</string>
+    <string name="navigation_drawer_close">Second Link</string>
 </resources>

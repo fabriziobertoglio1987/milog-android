@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.widget.TextView;
 
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -94,7 +95,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         mTurbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
-        location = HOST_URL + "/community";
+        // Setting http user agent of the request performed to the server with the android app. so that logics on the back end can be written for the android app
+        // https://stackoverflow.com/questions/26778882/check-if-a-request-came-from-android-app-in-rails
+        // https://stackoverflow.com/questions/5586197/android-user-agent#5590105
+        // https://github.com/ruby-china/ruby-china-android/blob/master/app/src/main/java/org/ruby_china/android/MainActivity.java#L70
+
+        WebSettings webSettings = TurbolinksSession.getDefault(this).getWebView().getSettings();
+        webSettings.setUserAgentString("turbolinks-app, sprachspiel, official, android");
+
+        location = HOST_URL + "/";
 
         TurbolinksSession.getDefault(this)
                 .view(mTurbolinksView)
