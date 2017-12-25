@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 
@@ -14,6 +15,7 @@ import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
 import me.hijinhu.milog.Constants;
+import me.hijinhu.milog.R;
 
 
 /**
@@ -54,6 +56,7 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
         location = getIntent().getStringExtra(INTENT_URL) != null ? getIntent().getStringExtra(INTENT_URL) : HOST_URL;
 
+
         TurbolinksSession.getDefault(this)
                 .activity(this)
                 .adapter(this)
@@ -67,11 +70,14 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
     protected void onRestart() {
         super.onRestart();
         if (!onSelectFileCallback && mTurbolinksView != null) {
+
+            View progressView = (View) findViewById(R.id.frameLayout);
             TurbolinksSession.getDefault(this)
                     .activity(this)
                     .adapter(this)
                     .restoreWithCachedSnapshot(true)
                     .view(mTurbolinksView)
+                    .progressView(progressView, R.id.indeterminateBar, 300)
                     .visit(location);
         } else {
             onSelectFileCallback = false;
@@ -125,6 +131,12 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
     @Override
     public void visitProposedToLocationWithAction(String location, String action) {
+
+//        // Changing to the standard https://github.com/turbolinks/turbolinks-android
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra(INTENT_URL, location);
+//        this.startActivity(intent);
+
         Intent intent;
 
         if (location.startsWith(HOST_URL)) {

@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.webkit.ValueCallback;
 
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -36,9 +37,17 @@ public class EmptyActivity extends BaseActivity implements TurbolinksSwipeRefres
 
         mTurbolinksView = (TurbolinksView) findViewById(R.id.empty_turbolinks_view);
 
+        View progressView = (View) findViewById(R.id.frameLayout);
         TurbolinksSession.getDefault(this)
+                .activity(this)
+                .adapter(this)
                 .view(mTurbolinksView)
+                .progressView(progressView, R.id.indeterminateBar, 300)
                 .visit(location);
+
+        //TurbolinksSession.getDefault(this)
+        //        .view(mTurbolinksView)
+        //        .visit(location);
 
         mSwipeRefreshLayout = (TurbolinksSwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
         mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);

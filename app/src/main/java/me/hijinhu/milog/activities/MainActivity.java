@@ -1,6 +1,8 @@
 package me.hijinhu.milog.activities;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -107,23 +109,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // https://github.com/tamcgoey/dasher-app-android/blob/master/src/main/java/com/usedashnow/dasher/ActiveDashActivity.java and to set the message read https://speakerdeck.com/tamcgoey/building-hybrid-apps-with-rails-a-case-study
         TurbolinksSession.getDefault(this).addJavascriptInterface(new WebService(this), "Android");
 
-        location = HOST_URL + "/";
+        // location = HOST_URL + "/";
+        // For this example we set a default location, unless one is passed in through an intent
+        location = getIntent().getStringExtra(INTENT_URL) != null ? getIntent().getStringExtra(INTENT_URL) : BASE_URL;
 
+        // Adding custom progress bar
+        View progressView = (View) findViewById(R.id.frameLayout);
         TurbolinksSession.getDefault(this)
+                .activity(this)
+                .adapter(this)
                 .view(mTurbolinksView)
+                .progressView(progressView, R.id.indeterminateBar, 300)
                 .visit(location);
 
         mSwipeRefreshLayout = (TurbolinksSwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
-        mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
-        mSwipeRefreshLayout.setCallback(this);
-        mSwipeRefreshLayout.setOnRefreshListener(
-            new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    TurbolinksSession.getDefault(MainActivity.this).visit(location);
-                }
-            }
-        );
+        //mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
+        //mSwipeRefreshLayout.setCallback(this);
+        //mSwipeRefreshLayout.setOnRefreshListener(
+        //    new SwipeRefreshLayout.OnRefreshListener() {
+        //        @Override
+        //        public void onRefresh() {
+        //            TurbolinksSession.getDefault(MainActivity.this).visit(location);
+        //        }
+        //    }
+        //);
     }
 
     @Override
@@ -283,6 +292,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             try {
                 mUserNameTextView.setText(mCurrentUserMeta.getString("Id"));
+                // I am not using this fields so I am removing them
                 //mUserEmailTextView.setText(mCurrentUserMeta.getString("email"));
                 //mUserAvatarDraweeView.setImageURI(mCurrentUserMeta.getString("avatarUrl"));
 
@@ -345,7 +355,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         try {
             mSearched = true;
             location = HOST_URL + "/community/search?token=" + URLEncoder.encode(query, "UTF-8");
-            TurbolinksSession.getDefault(this).visit(location);
+            // adding custom progress view
+            View progressView = (View) findViewById(R.id.frameLayout);
+            TurbolinksSession.getDefault(this)
+                    .activity(this)
+                    .adapter(this)
+                    .view(mTurbolinksView)
+                    .progressView(progressView, R.id.indeterminateBar, 300)
+                    .visit(location);
+            //TurbolinksSession.getDefault(this).visit(location);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -359,7 +377,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void searchCLose() {
         location = HOST_URL + "/";
-        TurbolinksSession.getDefault(this).visit(location);
+        // adding custom progress view
+        View progressView = (View) findViewById(R.id.frameLayout);
+        TurbolinksSession.getDefault(this)
+                .activity(this)
+                .adapter(this)
+                .view(mTurbolinksView)
+                .progressView(progressView, R.id.indeterminateBar, 300)
+                .visit(location);
+        //TurbolinksSession.getDefault(this).visit(location);
         mSearched = false;
     }
 }
