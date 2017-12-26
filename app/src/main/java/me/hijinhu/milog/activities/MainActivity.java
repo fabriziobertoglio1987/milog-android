@@ -110,8 +110,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         TurbolinksSession.getDefault(this).addJavascriptInterface(new WebService(this), "Android");
 
         // location = HOST_URL + "/";
+        // I ll comment some of the logics from the original projects, because I want the same navbar on every page
         // For this example we set a default location, unless one is passed in through an intent
-        location = getIntent().getStringExtra(INTENT_URL) != null ? getIntent().getStringExtra(INTENT_URL) : BASE_URL;
+        location = getIntent().getStringExtra(INTENT_URL) != null ? getIntent().getStringExtra(INTENT_URL) : HOST_URL;
 
         // Adding custom progress bar
         View progressView = (View) findViewById(R.id.frameLayout);

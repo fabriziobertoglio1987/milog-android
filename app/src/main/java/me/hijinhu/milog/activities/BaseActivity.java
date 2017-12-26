@@ -139,8 +139,12 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
         Intent intent;
 
+        // Changing EmptyActivity into MainActivity and consequential changes in the MainActivity
+        // to handle navigation to a link. I want to have the same tollbar on every page, so no need
+        // for using EmptyActivity for now
+
         if (location.startsWith(HOST_URL)) {
-            intent =  new Intent(this, EmptyActivity.class);
+            intent =  new Intent(this, MainActivity.class);
             intent.putExtra(INTENT_URL, location);
         } else {
             Uri uri = Uri.parse(location);
