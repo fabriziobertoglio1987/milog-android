@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 
+import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
@@ -21,9 +22,9 @@ import me.hijinhu.milog.widget.TurbolinksSwipeRefreshLayout;
  * EmptyActivity : render tmp page and could back to index
  * Created by kumho on 17-1-31.
  */
-public class EmptyActivity extends BaseActivity implements TurbolinksSwipeRefreshLayout.TurbolinksScrollUpCallback {
+public class EmptyActivity extends BaseActivity implements TurbolinksAdapter  {
 
-    private TurbolinksSwipeRefreshLayout mSwipeRefreshLayout;
+//    private TurbolinksSwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,13 @@ public class EmptyActivity extends BaseActivity implements TurbolinksSwipeRefres
 
         mTurbolinksView = (TurbolinksView) findViewById(R.id.empty_turbolinks_view);
 
+        // This activity is used for rendering pages that have a different toolbar
+        // here I disable the scroll up refresh for the chatroom page to allow users to interact with the
+        // chat and scroll up
+        // To disable the scrollbar I had to remove most of the content of the EmtpyActivity and rebuild it
+        // based on the demo 
+        TurbolinksSession.getDefault(this).setPullToRefreshEnabled(false);
+
         View progressView = (View) findViewById(R.id.frameLayout);
         TurbolinksSession.getDefault(this)
                 .activity(this)
@@ -45,58 +53,59 @@ public class EmptyActivity extends BaseActivity implements TurbolinksSwipeRefres
                 .progressView(progressView, R.id.indeterminateBar, 300)
                 .visit(location);
 
-        //TurbolinksSession.getDefault(this)
-        //        .view(mTurbolinksView)
-        //        .visit(location);
+//        TurbolinksSession.getDefault(this)
+//                .view(mTurbolinksView)
+//                .visit(location);
 
-        mSwipeRefreshLayout = (TurbolinksSwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
-        mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
-        mSwipeRefreshLayout.setCallback(this);
-        mSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        TurbolinksSession.getDefault(EmptyActivity.this).visit(location);
-                    }
-                }
-        );
+//        mSwipeRefreshLayout = (TurbolinksSwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
+//        mSwipeRefreshLayout.setRefreshing(false);
+//        mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
+//        mSwipeRefreshLayout.setCallback(this);
+//        mSwipeRefreshLayout.setOnRefreshListener(
+//                new SwipeRefreshLayout.OnRefreshListener() {
+//                    @Override
+//                    public void onRefresh() {
+//                        TurbolinksSession.getDefault(EmptyActivity.this).visit(location);
+//                    }
+//                }
+//        );
     }
 
     @Override
     public void visitCompleted() {
-        mSwipeRefreshLayout.setRefreshing(false);
-        TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
-                "$('meta[name=\"current-blog\"]').data()",
-                new VisitCompletedCallback(this));
+//        mSwipeRefreshLayout.setRefreshing(true);
+//        TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
+//                "$('meta[name=\"current-blog\"]').data()",
+//                new VisitCompletedCallback(this));
         super.visitCompleted();
     }
 
-    @Override
-    public boolean canChildScrollUp() {
-        return TurbolinksSession.getDefault(this).getWebView().getScrollY() > 0;
-    }
+//    @Override
+//    public boolean canChildScrollUp() {
+//        return TurbolinksSession.getDefault(this).getWebView().getScrollY() > 0;
+//    }
 
-    class VisitCompletedCallback implements ValueCallback<String> {
-        EmptyActivity mActivity;
+//    class VisitCompletedCallback implements ValueCallback<String> {
+//        EmptyActivity mActivity;
+//
+//        public VisitCompletedCallback(EmptyActivity activity) {
+//            mActivity = activity;
+//        }
 
-        public VisitCompletedCallback(EmptyActivity activity) {
-            mActivity = activity;
-        }
-
-        @Override
-        public void onReceiveValue(String value) {
-            if (DEBUG) {
-                Log.d(TAG, value);
-            }
-            try {
-                if (!value.equalsIgnoreCase("null")) {
-                    JSONObject currentBlogMeta = new JSONObject(value);
-                    String title = currentBlogMeta.getString("title");
-                    mActivity.setTitle(title);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//        @Override
+//        public void onReceiveValue(String value) {
+//            if (DEBUG) {
+//                Log.d(TAG, value);
+//            }
+//            try {
+//                if (!value.equalsIgnoreCase("null")) {
+////                    JSONObject currentBlogMeta = new JSONObject(value);
+////                    String title = currentBlogMeta.getString("title");
+////                    mActivity.setTitle(title);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

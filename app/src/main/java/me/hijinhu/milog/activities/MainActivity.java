@@ -27,6 +27,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Timer;
@@ -150,7 +151,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         if (isExited.compareAndSet(false, true)) {
-            ToastUtil.showShort("再按一次退出");
+            ToastUtil.showShort("Press again to exit");
             Timer timer = new Timer(true);
             timer.schedule(new TimerTask() {
                 @Override

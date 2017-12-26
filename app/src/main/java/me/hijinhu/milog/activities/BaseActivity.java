@@ -14,6 +14,8 @@ import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
+import java.io.Serializable;
+
 import me.hijinhu.milog.Constants;
 import me.hijinhu.milog.R;
 
@@ -25,6 +27,7 @@ import me.hijinhu.milog.R;
  */
 public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter {
     protected static final boolean DEBUG = Constants.DEBUG;
+    protected static final String SCROLL_UP = "scrollUpEnabled";
     protected static String TAG = BaseActivity.class.getSimpleName();
     protected static final String HOST_URL = Constants.HOST_URL;
     protected static final String INTENT_URL = "intentUrl";
@@ -55,7 +58,6 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
         super.onCreate(savedInstanceState);
 
         location = getIntent().getStringExtra(INTENT_URL) != null ? getIntent().getStringExtra(INTENT_URL) : HOST_URL;
-
 
         TurbolinksSession.getDefault(this)
                 .activity(this)
@@ -139,11 +141,12 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
         Intent intent;
 
-        // Changing EmptyActivity into MainActivity and consequential changes in the MainActivity
-        // to handle navigation to a link. I want to have the same tollbar on every page, so no need
-        // for using EmptyActivity for now
-
-        if (location.startsWith(HOST_URL)) {
+        // Using the Empty Activity only for the chatroom page to disable the scroll up refresh effect
+        // all the other pages will have the same toolbar
+        if (location.startsWith(HOST_URL) && location.contains("chatroom")) {
+            intent =  new Intent(this, EmptyActivity.class);
+            intent.putExtra(INTENT_URL, location);
+        } else if (location.startsWith(HOST_URL)) {
             intent =  new Intent(this, MainActivity.class);
             intent.putExtra(INTENT_URL, location);
         } else {
