@@ -1,19 +1,26 @@
-# Milog for Android
+# SprachSpiel for Android
+This project was forked from Milog Android client. 
 
-Milog Android 客户端，基于 Turbolinks + Rails + Android Native 的方式实现
+SprachSpiel Android app is based on [TurbolinksAndroid Library](https://github.com/turbolinks/turbolinks-android), it is a native android app that includes an Android WebView. The native components includes an [Android Navigation Drawer](https://developer.android.com/reference/android/support/v4/widget/DrawerLayout.html), a Toolbar, Notifications, Turbolinks-Android WebView..etc...
+
+The backend is based on Rails 5 [SprachSpiel App](https://github.com/fabriziobertoglio1987/sprachspiel)
 
 ## Thanks
+
++ [Milog Android](https://github.com/HiKumho/milog-android)
 
 + [Turbolinks Android](https://github.com/turbolinks/turbolinks-android)
 
 + [ruby-china-android](https://github.com/ruby-china/ruby-china-android)
 
-## 开发
+## Development
 
-+ Git pull 代码到本地
++ Git pull code to the local
 
-+ 若本地部署 [Milog](https://github.com/HiKumho/milog) 后, 可修改 `Constants.java` 文件中 `HOST_URL` 的指向, 注意要开放本地的端口, 如开放 3000 端口 `/sbin/iptables -I INPUT -p tcp --dport 3000 -j ACCEPT`
++ modify the `HOST_URL` in `Constants.java` with the same ip of your computer. You can find out the ip from the output of `ifconfig` in your terminal and start your `rails server` with command `rails s -b 192.1.1.32 -p 3000`.
+This command will start the puma webserver at http://192.1.1.32:3000
 
-## 效果截图
+## Pictures of the Original Milog App
+I forked this projects from Milog Android, soon I will upload my own pictures
 
 ![](milog-android.png)
