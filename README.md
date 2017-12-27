@@ -5,6 +5,8 @@ SprachSpiel Android app is based on [TurbolinksAndroid Library](https://github.c
 
 The backend is based on Rails 5 [SprachSpiel App](https://github.com/fabriziobertoglio1987/sprachspiel)
 
+I suggest to read the commit history, the comments of my and the other projects, also extensively read the Turbolinks and Turbolinks-Android documentation and do a basic Android Sdk training.
+
 ## Thanks
 
 + [Milog Android](https://github.com/HiKumho/milog-android)
