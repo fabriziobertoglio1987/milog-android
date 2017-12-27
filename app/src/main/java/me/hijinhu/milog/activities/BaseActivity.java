@@ -33,6 +33,7 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
     protected static final String INTENT_URL = "intentUrl";
 
     protected static final String ACT_ADVANCE = "advance";
+    protected static final String ACT_REPLACE = "replace";
 
     protected String location;
     protected TurbolinksView mTurbolinksView;

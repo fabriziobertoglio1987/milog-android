@@ -19,12 +19,12 @@
         fresco:placeholderImage="@drawable/ic_account_circle_white_48dp"
         fresco:roundAsCircle="true"/>
 
-    <TextView android:id="@+id/user_name"
+    <!--TextView android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:text="Guest"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/-->
 
     <TextView android:id="@+id/user_email"
         android:layout_width="wrap_content"

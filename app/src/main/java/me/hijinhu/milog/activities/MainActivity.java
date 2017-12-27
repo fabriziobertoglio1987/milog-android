@@ -93,12 +93,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mNavigationView.setNavigationItemSelectedListener(this);
         View headerView = mNavigationView.getHeaderView(0);
         mUserAvatarDraweeView = (SimpleDraweeView) headerView.findViewById(R.id.user_avatar);
-        mUserNameTextView = (TextView) headerView.findViewById(R.id.user_name);
+//        mUserNameTextView = (TextView) headerView.findViewById(R.id.user_name);
         mUserEmailTextView = (TextView) headerView.findViewById(R.id.user_email);
 
 
         mTurbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
-
         // Setting http user agent of the request performed to the server with the android app. so that logics on the back end can be written for the android app
         // https://stackoverflow.com/questions/26778882/check-if-a-request-came-from-android-app-in-rails
         // https://stackoverflow.com/questions/5586197/android-user-agent#5590105
@@ -106,6 +105,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         WebSettings webSettings = TurbolinksSession.getDefault(this).getWebView().getSettings();
         webSettings.setUserAgentString("turbolinks-app, sprachspiel, official, android");
+
+        // The PullToRefresh from TurbolinksSession is enabled in the MainActivity (all screens), but disable on the Chatroom
+        // from EmptyActivity
+        TurbolinksSession.getDefault(this).setPullToRefreshEnabled(true);
 
         // I add the Javascript interface from WebService.java showToast()
         // https://github.com/tamcgoey/dasher-app-android/blob/master/src/main/java/com/usedashnow/dasher/ActiveDashActivity.java and to set the message read https://speakerdeck.com/tamcgoey/building-hybrid-apps-with-rails-a-case-study
@@ -209,7 +212,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     visitProposedToLocationWithAction(HOST_URL + "/users/sign_in", ACT_ADVANCE);
                     break;
                 case R.id.nav_sign_out:
+                    // performs a javascript AJAX request http DELETE users/sign_out to destroy the session
                     signOut();
+                    // refresh the page
+                    visitProposedToLocationWithAction(HOST_URL, ACT_REPLACE);
                     break;
                 case R.id.nav_profiles:
                     visitProposedToLocationWithAction(HOST_URL + "/users/edit", ACT_ADVANCE);
@@ -307,12 +313,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             naviMenu.setGroupVisible(R.id.group_guest, false);
 
             try {
-                mUserNameTextView.setText(mCurrentUserMeta.getString("Id"));
+                // mUserNameTextView.setText(mCurrentUserMeta.getString("Id"));
+                mUserEmailTextView.setText(mCurrentUserMeta.getString("email"));
                 // I am not using this fields so I am removing them
-                //mUserEmailTextView.setText(mCurrentUserMeta.getString("email"));
                 //mUserAvatarDraweeView.setImageURI(mCurrentUserMeta.getString("avatarUrl"));
 
-                updateNotificationText(mCurrentUserMeta.getInt("notifyCount"));
+                // I need to configure later the notifications
+                //updateNotificationText(mCurrentUserMeta.getInt("notifyCount"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -320,7 +327,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             naviMenu.setGroupVisible(R.id.group_user, false);
             naviMenu.setGroupVisible(R.id.group_guest, true);
 
-            mUserNameTextView.setText("Guest");
+            // I removed this field from the layout
+            // mUserNameTextView.setText("Guest");
             mUserEmailTextView.setText("guest@sprachspiel.xyz");
             mUserAvatarDraweeView.setImageResource(R.drawable.ic_account_circle_white_48dp);
         }
