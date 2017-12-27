@@ -71,19 +71,29 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (!onSelectFileCallback && mTurbolinksView != null) {
 
-            View progressView = (View) findViewById(R.id.frameLayout);
-            TurbolinksSession.getDefault(this)
-                    .activity(this)
-                    .adapter(this)
-                    .restoreWithCachedSnapshot(true)
-                    .view(mTurbolinksView)
-                    .progressView(progressView, R.id.indeterminateBar, 300)
-                    .visit(location);
-        } else {
-            onSelectFileCallback = false;
-        }
+        // Since the webView is shared between activities, we need to tell Turbolinks
+        // to load the location from the previous activity upon restarting
+        TurbolinksSession.getDefault(this)
+                .activity(this)
+                .adapter(this)
+                .restoreWithCachedSnapshot(true)
+                .view(mTurbolinksView)
+                .visit(location);
+
+//        if (!onSelectFileCallback && mTurbolinksView != null) {
+//
+//            View progressView = (View) findViewById(R.id.frameLayout);
+//            TurbolinksSession.getDefault(this)
+//                    .activity(this)
+//                    .adapter(this)
+//                    .restoreWithCachedSnapshot(true)
+//                    .view(mTurbolinksView)
+//                    .progressView(progressView, R.id.indeterminateBar, 300)
+//                    .visit(location);
+//        } else {
+//            onSelectFileCallback = false;
+//        }
     }
 
     @Override
@@ -168,7 +178,7 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
         TurbolinksSession.getDefault(this)
                          .getWebView()
                          .evaluateJavascript(
-                                 "$.ajax({url: '/signout', method: 'DELETE'})",
+                                 "$.ajax({url: '/users/sign_out', method: 'DELETE'})",
                                  null);
     }
 }

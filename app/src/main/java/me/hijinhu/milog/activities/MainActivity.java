@@ -20,6 +20,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.widget.TextView;
 
+import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -44,7 +45,7 @@ import me.hijinhu.milog.widget.TurbolinksSwipeRefreshLayout;
  * <p/>
  * Created by kumho on 17-1-15.
  */
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, TurbolinksSwipeRefreshLayout.TurbolinksScrollUpCallback {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, TurbolinksSwipeRefreshLayout.TurbolinksScrollUpCallback {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final int TIME_WAIT_EXIT = 2500;
@@ -125,8 +126,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 .visit(location);
 
         mSwipeRefreshLayout = (TurbolinksSwipeRefreshLayout) findViewById(R.id.swipeRefresh_layout);
-        //mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
-        //mSwipeRefreshLayout.setCallback(this);
+        mSwipeRefreshLayout.setProgressViewOffset(true, 50, 200);
+        mSwipeRefreshLayout.setCallback(this);
         //mSwipeRefreshLayout.setOnRefreshListener(
         //    new SwipeRefreshLayout.OnRefreshListener() {
         //        @Override
@@ -137,32 +138,38 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //);
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//
+//    }
 
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        }
+//    @Override
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//        mDrawerToggle.syncState();
+//    }
 
-        if (isExited.compareAndSet(false, true)) {
-            ToastUtil.showShort("Press again to exit");
-            Timer timer = new Timer(true);
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExited.set(false);
-                }
-            }, TIME_WAIT_EXIT);
-        } else {
-            this.finishAffinity();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            mDrawerLayout.closeDrawer(GravityCompat.START);
+//            return;
+//        }
+//
+//        if (isExited.compareAndSet(false, true)) {
+//            ToastUtil.showShort("Press again to exit");
+//            Timer timer = new Timer(true);
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    isExited.set(false);
+//                }
+//            }, TIME_WAIT_EXIT);
+//        } else {
+//            this.finishAffinity();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,13 +179,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        searchView.setOnQueryTextListener(this);
-        MenuItemCompat.setOnActionExpandListener(searchItem, new SearchExpandListener(this));
+//        searchView.setOnQueryTextListener(this);
+//        MenuItemCompat.setOnActionExpandListener(searchItem, new SearchExpandListener(this));
 
         MenuItem notifyItem = menu.findItem(R.id.action_notification);
         mNotificationTextView = (TextView) MenuItemCompat.getActionView(notifyItem).findViewById(R.id.notification_text);
         return true;
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        //visitProposedToLocationWithAction(HOST_URL + "/users/edit", ACT_ADVANCE);
+//        super.onBackPressed();
+//    }
 
     // -----------------------------------------------------------------------
     // NavigationView overrides
@@ -216,13 +229,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    public void addArticle(View v) {
-        visitProposedToLocationWithAction(HOST_URL + "/articles/new", ACT_ADVANCE);
-    }
-
-    public void visitNotification(View v) {
-        visitProposedToLocationWithAction(HOST_URL + "/notifications", ACT_ADVANCE);
-    }
+//    public void addArticle(View v) {
+//        visitProposedToLocationWithAction(HOST_URL + "/articles/new", ACT_ADVANCE);
+//    }
+//
+//    public void visitNotification(View v) {
+//        visitProposedToLocationWithAction(HOST_URL + "/notifications", ACT_ADVANCE);
+//    }
 
     // -----------------------------------------------------------------------
     // TurbolinksAdapter overrides
@@ -330,64 +343,64 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     // -----------------------------------------------------------------------
     // Search
     // -----------------------------------------------------------------------
-    class SearchExpandListener implements MenuItemCompat.OnActionExpandListener {
-        private MainActivity mActivity;
+//    class SearchExpandListener implements MenuItemCompat.OnActionExpandListener {
+//        private MainActivity mActivity;
+//
+//        public SearchExpandListener(MainActivity activity) {
+//            mActivity = activity;
+//        }
+//
+//        @Override
+//        public boolean onMenuItemActionExpand(MenuItem item) {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onMenuItemActionCollapse(MenuItem item) {
+//            if (mSearched) {
+//                mActivity.searchCLose();
+//            }
+//            return true;
+//        }
+//    }
 
-        public SearchExpandListener(MainActivity activity) {
-            mActivity = activity;
-        }
 
-        @Override
-        public boolean onMenuItemActionExpand(MenuItem item) {
-            return true;
-        }
+//    @Override
+//    public boolean onQueryTextSubmit(String query) {
+//        try {
+//            mSearched = true;
+//            location = HOST_URL + "/community/search?token=" + URLEncoder.encode(query, "UTF-8");
+//            // adding custom progress view
+//            View progressView = (View) findViewById(R.id.frameLayout);
+//            TurbolinksSession.getDefault(this)
+//                    .activity(this)
+//                    .adapter(this)
+//                    .view(mTurbolinksView)
+//                    .progressView(progressView, R.id.indeterminateBar, 300)
+//                    .visit(location);
+//            //TurbolinksSession.getDefault(this).visit(location);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        return true;
+//    }
 
-        @Override
-        public boolean onMenuItemActionCollapse(MenuItem item) {
-            if (mSearched) {
-                mActivity.searchCLose();
-            }
-            return true;
-        }
-    }
-
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        try {
-            mSearched = true;
-            location = HOST_URL + "/community/search?token=" + URLEncoder.encode(query, "UTF-8");
-            // adding custom progress view
-            View progressView = (View) findViewById(R.id.frameLayout);
-            TurbolinksSession.getDefault(this)
-                    .activity(this)
-                    .adapter(this)
-                    .view(mTurbolinksView)
-                    .progressView(progressView, R.id.indeterminateBar, 300)
-                    .visit(location);
-            //TurbolinksSession.getDefault(this).visit(location);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
-
-    private void searchCLose() {
-        location = HOST_URL + "/";
-        // adding custom progress view
-        View progressView = (View) findViewById(R.id.frameLayout);
-        TurbolinksSession.getDefault(this)
-                .activity(this)
-                .adapter(this)
-                .view(mTurbolinksView)
-                .progressView(progressView, R.id.indeterminateBar, 300)
-                .visit(location);
-        //TurbolinksSession.getDefault(this).visit(location);
-        mSearched = false;
-    }
+//    @Override
+//    public boolean onQueryTextChange(String newText) {
+//        return false;
+//    }
+//
+//    private void searchCLose() {
+//        location = HOST_URL + "/";
+//        // adding custom progress view
+//        View progressView = (View) findViewById(R.id.frameLayout);
+//        TurbolinksSession.getDefault(this)
+//                .activity(this)
+//                .adapter(this)
+//                .view(mTurbolinksView)
+//                .progressView(progressView, R.id.indeterminateBar, 300)
+//                .visit(location);
+//        //TurbolinksSession.getDefault(this).visit(location);
+//        mSearched = false;
+//    }
 }

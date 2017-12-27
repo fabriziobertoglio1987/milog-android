@@ -42,7 +42,8 @@ public class EmptyActivity extends BaseActivity implements TurbolinksAdapter  {
         // here I disable the scroll up refresh for the chatroom page to allow users to interact with the
         // chat and scroll up
         // To disable the scrollbar I had to remove most of the content of the EmtpyActivity and rebuild it
-        // based on the demo 
+        // based on the MainActivity of https://github.com/turbolinks/turbolinks-android/blob/master/demoapp/src/main/java/com/basecamp/turbolinks/demo/MainActivity.java
+
         TurbolinksSession.getDefault(this).setPullToRefreshEnabled(false);
 
         View progressView = (View) findViewById(R.id.frameLayout);
