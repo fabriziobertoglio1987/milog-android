@@ -67,6 +67,15 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
                 .setWebChromeClient(new WebChromeClient());
 
         AppManager.getInstance().addActivity(this);
+
+        // this code is just allowing me to debug the webview and I will remove it when the app is finished
+        WebView webview = new WebView(this);
+        setContentView(webview);
+        webview.setWebContentsDebuggingEnabled(true);
+
+        // Simplest usage: note that an exception will NOT be thrown
+        // if there is an error loading this page (see below).
+//        webview.loadUrl("https://example.com/");
     }
 
     @Override

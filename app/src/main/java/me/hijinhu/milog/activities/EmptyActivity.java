@@ -1,5 +1,7 @@
 package me.hijinhu.milog.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -7,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
+import android.webkit.WebView;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -46,6 +49,7 @@ public class EmptyActivity extends BaseActivity implements TurbolinksAdapter  {
 
         TurbolinksSession.getDefault(this).setPullToRefreshEnabled(false);
 
+        // For debugging purposes I disable this page
         View progressView = (View) findViewById(R.id.frameLayout);
         TurbolinksSession.getDefault(this)
                 .activity(this)
@@ -79,6 +83,14 @@ public class EmptyActivity extends BaseActivity implements TurbolinksAdapter  {
 //                "$('meta[name=\"current-blog\"]').data()",
 //                new VisitCompletedCallback(this));
         super.visitCompleted();
+
+        // setting html to have height 100% for evey different screen
+        // with jquery $('html').css('height', '100px');
+//        Integer viewHeight = mTurbolinksView.getHeight();
+//        TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
+//                "$('html').css('height', '" + viewHeight + "px' );",
+//                null);
+
     }
 
 //    @Override
