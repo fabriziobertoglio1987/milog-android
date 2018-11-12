@@ -1,5 +1,6 @@
 # SprachSpiel for Android
-This project was forked from Milog Android client. 
+This project was forked from Milog Android client.
+I am currently working on the development branch 
 
 SprachSpiel Android app is based on [TurbolinksAndroid Library](https://github.com/turbolinks/turbolinks-android), it is a native android app that includes an Android WebView. The native components includes an [Android Navigation Drawer](https://developer.android.com/reference/android/support/v4/widget/DrawerLayout.html), a Toolbar, Notifications, Turbolinks-Android WebView..etc...
 
