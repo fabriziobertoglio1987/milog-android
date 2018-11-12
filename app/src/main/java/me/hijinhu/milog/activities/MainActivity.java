@@ -203,38 +203,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
-        try {
-            switch (item.getItemId()) {
-                case R.id.nav_sign_up:
-                    visitProposedToLocationWithAction(HOST_URL + "/users/sign_up", ACT_ADVANCE);
-                    break;
-                case R.id.nav_sign_in:
-                    visitProposedToLocationWithAction(HOST_URL + "/users/sign_in", ACT_ADVANCE);
-                    break;
-                case R.id.nav_sign_out:
-                    // performs a javascript AJAX request http DELETE users/sign_out to destroy the session
-                    signOut();
-                    // refresh the page
-                    visitProposedToLocationWithAction(HOST_URL, ACT_REPLACE);
-                    break;
-                case R.id.nav_profiles:
-                    visitProposedToLocationWithAction(HOST_URL + "/users/edit", ACT_ADVANCE);
-                    break;
-                case R.id.nav_room:
-                    visitProposedToLocationWithAction(HOST_URL + "/rooms/" + mCurrentUserMeta.get("roomId"), ACT_ADVANCE);
-                    break;
-                case R.id.nav_chatroom:
-                    visitProposedToLocationWithAction(HOST_URL + "/rooms/" + mCurrentUserMeta.get("roomId") + "/chatrooms/" + mCurrentUserMeta.get("chatroomId"), ACT_ADVANCE);
-                    break;
-                case R.id.nav_drafts:
-                    visitProposedToLocationWithAction(HOST_URL + "/" + mCurrentUserMeta.get("username") + "/drafts", ACT_ADVANCE);
-                    break;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        switch (item.getItemId()) {
+            case R.id.nav_sign_up:
+                visitProposedToLocationWithAction(HOST_URL + "/users/sign_up", ACT_ADVANCE);
+                break;
+            case R.id.nav_sign_in:
+                visitProposedToLocationWithAction(HOST_URL + "/users/sign_in", ACT_ADVANCE);
+                break;
+            case R.id.nav_sign_out:
+                // performs a javascript AJAX request http DELETE users/sign_out to destroy the session
+                signOut();
+                // refresh the page
+                visitProposedToLocationWithAction(HOST_URL, ACT_REPLACE);
+                break;
+            case R.id.nav_profiles:
+                visitProposedToLocationWithAction(HOST_URL + "/users/edit", ACT_ADVANCE);
+                break;
+            case R.id.nav_events:
+                visitProposedToLocationWithAction(HOST_URL + "/events", ACT_ADVANCE);
+                break;
+            case R.id.nav_chatroom:
+                visitProposedToLocationWithAction(HOST_URL + "/chatrooms/1", ACT_ADVANCE);
+                break;
         }
         return true;
     }
+//        try {
+//            switch (item.getItemId()) {
+//                case R.id.nav_drafts:
+//                    visitProposedToLocationWithAction(HOST_URL + "/" + mCurrentUserMeta.get("username") + "/drafts", ACT_ADVANCE);
+//                    break;
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return true;
+//    }
 
 //    public void addArticle(View v) {
 //        visitProposedToLocationWithAction(HOST_URL + "/articles/new", ACT_ADVANCE);
