@@ -8,7 +8,7 @@ package me.hijinhu.milog;
 public class Constants {
     public static final boolean DEBUG = true;
 
-    public static final String HOST_URL = "http://192.168.0.18:3000";
+    public static final String HOST_URL = "https://languagegame.xyz";
 
     public static final int REQUEST_SELECT_FILE = 0x100;
 }
